@@ -1,0 +1,30 @@
+{% extends "base.html.j2" %}
+{% block customhead %}
+    <link rel="stylesheet" href="photoswipe/dist/photoswipe.css">
+    <style>
+.photo {text-decoration: none}
+    </style>
+    <script type="module">
+import PhotoSwipeLightbox from './photoswipe/dist/photoswipe-lightbox.esm.js';
+import PhotoSwipe from './photoswipe/dist/photoswipe.esm.js';
+
+const lightbox = new PhotoSwipeLightbox({
+  gallery: '#gallery',
+  children: 'a',
+  pswpModule: PhotoSwipe
+});
+
+lightbox.init();
+    </script>
+
+{% endblock %}
+
+{% block content %}
+<div class="pswp-gallery" id="gallery">
+    {% for photo in photos %}
+        <a class="photo" href="{{ photo.orig }}" data-pswp-width="{{ photo.orig_width }}" data-pswp-height="{{ photo.orig_height }}" target="_blank">
+            <img src="{{ photo.thumb }}" width="{{ photo.thumb_width }}">
+        </a>
+    {% endfor %}    
+</div>
+{% endblock %}
