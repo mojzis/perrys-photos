@@ -70,8 +70,10 @@ def thumb_size(orig_width, orig_height, config: Config):
     thumb_width = config.thumb_width
     thumb_height = thumb_width * 3/2
     if orig_width > orig_height:
-        thumb_width = thumb_width * 2
-        thumb_height = thumb_width * 2/3
+        # thumb_width = thumb_width * 2
+        # thumb_height = thumb_width * 2/3
+        # thumb_height = thumb_width
+        thumb_width = thumb_height *3/2
 
     return(thumb_width, thumb_height)
 
@@ -94,7 +96,12 @@ def ensure_dirs(config: Config)->None:
     dirs = [
         config.pic_source_dir,
         config.pic_target,
-        config.pic_thumb
+        config.pic_thumb,
+        "public/photoswipe"
     ]
     for dir in dirs:
         os.makedirs(dir, exist_ok=True)
+
+def copy_static(config: Config):
+    for filename in os.listdir("static/photoswipe"):
+        shutil.copy(f"static/photoswipe/{filename}","public/photoswipe")

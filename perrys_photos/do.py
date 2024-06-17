@@ -1,7 +1,7 @@
 
 import typer
 from rich import print
-from perrys_photos.lib import copy_img, ensure_dirs, generate_index, generate_thumb, Config, get_photos, list_source_images
+from perrys_photos.lib import copy_img, copy_static, ensure_dirs, generate_index, generate_thumb, Config, get_photos, list_source_images
 
 app = typer.Typer()
 
@@ -19,7 +19,9 @@ def images():
 @app.command()
 def pub():
     conf = Config()
+    ensure_dirs(conf)
     imgs = list_source_images(conf)
     photos = get_photos(imgs, conf)
+    copy_static(conf)
     generate_index(photos, conf)
 
